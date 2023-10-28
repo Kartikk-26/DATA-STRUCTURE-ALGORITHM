@@ -1,32 +1,29 @@
-//THIS IS THE CODE IN WHICH WE READ THE WHOLE LINE IN NAME AND BRANCH 
 #include <stdio.h>
+#include<stdlib.h>
+
+struct student {
+    int rnum;
+    char name[20];
+};
 
 int main() {
-    int roll_no;
-    char name[30];
-    char branch[40];
-    int batch;
+    struct student s, *p;
+    p = &s;
+    printf("ENTER ROLL NUMBER AND NAME : \n");
+    
+    // Use & before p->rnum to pass the address of rnum to scanf
+    scanf("%d", &p->rnum);
+    
+    // Remove fflush(stdin) as it's not a recommended practice
+    // Use fgets to read the name to avoid buffer overflow issues
+    printf("ENTER NAME : \n");
+    fgets(p->name, sizeof(p->name), stdin);
+    
+    // Replace the newline character with a null terminator in the name
+    size_t length = strlen(p->name);
+    if (length > 0 && p->name[length - 1] == '\n') {
+        p->name[length - 1] = '\0';
+    }
 
-    // Taking inputs
-    printf("Enter the Roll Number of Student: ");
-    scanf("%d", &roll_no);
-
-    printf("Enter Name of Student: ");
-    scanf(" %[^\n]s", name); // Read the whole line, including spaces
-
-    printf("Enter Branch of Student: ");
-    scanf(" %[^\n]s", branch); // Read the whole line, including spaces
-
-    printf("Enter Batch of Student: ");
-    scanf("%d", &batch);
-
-    // Displaying details of the student
-    printf("\nStudent details are:\n");
-
-    printf("Roll No: %d\n", roll_no);
-    printf("Name: %s\n", name);
-    printf("Branch: %s\n", branch);
-    printf("Batch: %d\n", batch);
-
-    return 0;
+    printf("ROLL NUMBER : %d\n NAME IS %s\n", p->rnum, p->name);
 }
